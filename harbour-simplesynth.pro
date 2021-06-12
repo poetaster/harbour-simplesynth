@@ -14,7 +14,14 @@ TARGET = harbour-simplesynth
 
 CONFIG += sailfishapp
 
+PKGCONFIG += sdl2 SDL2_mixer
+CONFIG += link_pkgconfig
+
 SOURCES += src/harbour-simplesynth.cpp
+SOURCES += src/lib/*.cpp
+
+# Headers
+HEADERS += src/lib/*.hpp
 
 DISTFILES += qml/harbour-simplesynth.qml \
     qml/cover/CoverPage.qml \
@@ -38,3 +45,6 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-simplesynth-de.ts
+
+SUBDIRS += \
+    src/lib/libsynth.pro

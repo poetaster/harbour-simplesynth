@@ -12,8 +12,8 @@ Summary:    An Audio Synth with a simple QML UI
 Version:    0.1
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
-URL:        http://example.org/
+License:    GPLv3
+URL:        http://github.org/poetater/harbour-simplesynth
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-simplesynth.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -21,6 +21,8 @@ BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(sdl2)
+BuildRequires:  pkgconfig(SDL2_mixer)
 BuildRequires:  desktop-file-utils
 
 %description
