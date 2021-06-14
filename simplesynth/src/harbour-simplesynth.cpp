@@ -3,7 +3,7 @@
 #endif
 
 #include <sailfishapp.h>
-#include <libsynth.hpp>
+#include "../libsynth/libsynth.hpp"
 
 int main(int argc, char *argv[])
 {
