@@ -18,9 +18,16 @@ HEADERS += libsynth.hpp
 PKGCONFIG += sdl2 SDL2_mixer
 CONFIG += link_pkgconfig
 
+QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
+#INSTALLS += "/usr/share/$${TARGET}/lib"
+
 # does this, I think, target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDLMIXER_LIBRARIES})
 
-#lib.path = "/usr/share/harbour-simplesynth/lib"
+# NONSENSE
+TARGET = synth
+#DESTDIR = ../simplesynth
+#INSTALLS += "/usr/share/harbour-simplesynth/lib"
+#DESTDIR += "/usr/share/harbour-simplesynth/lib"
 #INSTALLS += lib
 
 #TARGET +=  synth.so

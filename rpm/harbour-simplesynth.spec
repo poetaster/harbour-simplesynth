@@ -6,11 +6,13 @@
 Name:       harbour-simplesynth
 
 # >> macros
+%define __provides_exclude_from ^%{_datadir}/.*$
+%define __requires_exclude ^libsynth.*$
 # << macros
 
 Summary:    An Audio Synth with a simple QML UI
 Version:    0.1
-Release:    2
+Release:    1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://github.org/poetater/harbour-simplesynth
@@ -52,7 +54,12 @@ rm -rf %{buildroot}
 # << install pre
 %qmake5_install
 
+#install -D -m 755 --target-directory %{buildroot}%{_datadir}/%{name}/lib/ \
+#    /usr/lib/libsynth.so
+
 # >> install post
+#install -D -t %{buildroot}/%{_datadir}/%{name}/lib %{_libdir}/libsynth.so.[0-9][0-9]
+#install -m 644 -p %{buildroot}/libsynth/libsynth.so.[0-9][0-9] %{buildroot}/usr/share/%{name}/lib/
 # << install post
 
 desktop-file-install --delete-original       \

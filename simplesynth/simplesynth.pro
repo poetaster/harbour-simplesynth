@@ -19,15 +19,24 @@ CONFIG += sailfishapp
 PKGCONFIG += sdl2 SDL2_mixer sailfishapp
 CONFIG += link_pkgconfig
 
+# include our shared library and install it
+message($$OUT_PWD)
+
+LIBS += -L$$OUT_PWD/../libsynth -llibsynth
+libsynth.files += ../libsynth/libsynth.so.1.0.0
+libsynth.path = /usr/share/$${TARGET}/lib
+INSTALLS += libsynth
+
+message($$TARGET)
+#LIBS += -L../libsynth
+#LIBS += -llibsynth
+QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
+
 SOURCES += src/harbour-simplesynth.cpp
-
-LIBS += -L../libsynth
-LIBS += -llibsynth
-
 # Headers
 HEADERS += ../libsynth/libsynth.hpp
 
-QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
+INCLUDEPATH += ../libsynth
 
 OTHER_FILES += $$files(rpm/*)
 
