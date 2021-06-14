@@ -10,7 +10,7 @@ Name:       harbour-simplesynth
 
 Summary:    An Audio Synth with a simple QML UI
 Version:    0.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://github.org/poetater/harbour-simplesynth
