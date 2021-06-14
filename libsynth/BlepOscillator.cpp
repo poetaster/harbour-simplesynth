@@ -1,4 +1,4 @@
-#include <libsynth.hpp>
+#include "libsynth.hpp"
 inline sgfloat poly_blep(sgfloat t, sgfloat dt)
 {
 	if (t < dt)

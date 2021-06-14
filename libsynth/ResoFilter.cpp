@@ -1,4 +1,4 @@
-#include <libsynth.hpp>
+#include "libsynth.hpp"
 
 ResoFilter::ResoFilter(istream& in)
 {

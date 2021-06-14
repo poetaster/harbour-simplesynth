@@ -1,4 +1,4 @@
-#include <libsynth.hpp>
+#include "libsynth.hpp"
 #include <math.h>
 
 Filter::Filter()

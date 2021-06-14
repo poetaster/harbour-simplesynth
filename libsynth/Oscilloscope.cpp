@@ -1,4 +1,4 @@
-#include <libsynth.hpp>
+#include "libsynth.hpp"
 #include <future>
 
 Oscilloscope::Oscilloscope::Buffer::Buffer(uint32_t sz, bool auto_thr)

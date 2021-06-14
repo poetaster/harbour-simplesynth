@@ -1,4 +1,4 @@
-#include <libsynth.hpp>
+#include "libsynth.hpp"
 
 HighFilter::HighFilter(istream& in)
 : Filter(in)

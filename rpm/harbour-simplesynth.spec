@@ -26,7 +26,7 @@ BuildRequires:  pkgconfig(SDL2_mixer)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my Sailfish OS Application
+A simple audio synth which can be controlled via QUI and by writing generator descriptions.
 
 
 %prep

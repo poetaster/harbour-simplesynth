@@ -12,7 +12,7 @@ License: GPLv3
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Short description of my Sailfish OS Application
+  A simple audio synth which can be controlled via QUI and by writing generator descriptions.
 Builder: qmake5
 
 # This section specifies build dependencies that are resolved using pkgconfig.
@@ -39,6 +39,9 @@ Files:
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'
+Macros:
+#    - '__provides_exclude_from; ^%{_datadir}/.*$'
+#    - '__requires_exclude; ^libsynth.*$'
 
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle
