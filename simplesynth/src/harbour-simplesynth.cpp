@@ -3,53 +3,38 @@
 #endif
 
 #include <sailfishapp.h>
-#include "../libsynth/libsynth.hpp"
+#include "../libsynth/include/libsynth.hpp"
+void makeAsound() {
+    // initial instrument definition for testing
+    string input = "fm 100 150 am 0 100 square 100:20 square 39 adsr 1:0 1000:0 2000:100 5001:100 6000:-100 8000:0 loop level 1";
 
-// Exemple of external event that can modify the
-// generated sound (see mousewheel.synth)
-class SoundGeneratorMouseWheelLevel : public SoundGenerator {
-  public:
-                SoundGeneratorMouseWheelLevel() : SoundGenerator("mouse_hook") {
-                        init();
-                }
+    long duration = 30000;
+    uint32_t ech = 48000;
+    const int BUF_LENGTH = 1024;
 
-                SoundGeneratorMouseWheelLevel(istream &in) {
-                        in >> min;
-                        in >> max;
-                }
+    //SoundGenerator::play(SoundGenerator::factory("fm 50 150 sinus 440 hook_speed"));
 
-                virtual void help(ostream &out)
-                { out << "mouse_hook min max" << endl; }
+    SoundGenerator* g = SoundGenerator::factory(input);
+    SoundGenerator::play(g);
 
-                virtual void next(float &left, float &right, float speed) {
-                        int x,y;
-                        SDL_PumpEvents();
-                        if (SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT))
-                                exit(1);
-                        left += min + (max-min)*(float)x/640.0;
-                        right += min + (max-min)*(float)y/480.0;
-                }
-  protected:
-        virtual SoundGenerator* build(istream &in) const
-        { return new SoundGeneratorMouseWheelLevel(in); }
+    SoundGenerator::setVolume(0);   // Avoid sound clicks at start
+    SoundGenerator::fade_in(10);
+    SoundGenerator::setVolume(0);   // Avoid sound clicks at start
+    SoundGenerator::fade_in(10);
 
-        void init() {
-                static bool done=false;
-                if (done) return;
+    const int fade_time=50;
 
-                if (SDL_Init( SDL_INIT_VIDEO ) == -1) {
-                        cerr << "Cannot init video" << endl;
-                        exit(1);
-                }
-                SDL_Window *win = SDL_CreateWindow("Move the mouse here, click to exit", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-                if (win == 0) exit(1);
-        }
+    if (duration > fade_time) {
+            SDL_Delay(duration-fade_time); // Play for ms
+            SoundGenerator::fade_out(fade_time);
+            SDL_Delay(fade_time); // Play for 100 ms (while fade out)
+    } else {
+            SoundGenerator::fade_out(fade_time);
+            SDL_Delay(fade_time); // Play for ms (while fading out)
+    }
+    SDL_Delay(1000); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
 
-  private:
-        float min;
-        float max;
-};
-
+}
 
 int main(int argc, char *argv[])
 {
@@ -65,7 +50,15 @@ int main(int argc, char *argv[])
     // Exemple of external event that can modify the
     // generated sound (see mousewheel.synth)
 
-    //return static SoundGeneratorMouseWheelLevel gen_mouse;
+    /*
+     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QScopedPointrer<QQuickView> view(SailfishApp::createView());
+    view->setSource(SailfishApp::pathTo("qml/harbour-simplesynth.qml"));
+    view->setTitle("Simplesynth");
+    view->showFullScreen();
+    return app->exec();
+    */
+    makeAsound();
     return SailfishApp::main(argc, argv);
 }
 

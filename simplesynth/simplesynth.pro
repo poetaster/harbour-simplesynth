@@ -22,8 +22,11 @@ CONFIG += link_pkgconfig
 # include our shared library and install it
 message($$OUT_PWD)
 
-LIBS += -L$$OUT_PWD/../libsynth -llibsynth
-libsynth.files += ../libsynth/libsynth.so.1.0.0
+LIBS += -L$$OUT_PWD/../libsynth -lsynthetizer
+libsynth.files += ../libsynth/libsynthetizer.so.1.0.0
+libsynth.files += ../libsynth/libsynthetizer.so.1.0
+libsynth.files += ../libsynth/libsynthetizer.so.1
+libsynth.files += ../libsynth/libsynthetizer.so
 libsynth.path = /usr/share/$${TARGET}/lib
 INSTALLS += libsynth
 
@@ -34,7 +37,7 @@ QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
 
 SOURCES += src/harbour-simplesynth.cpp
 # Headers
-HEADERS += ../libsynth/libsynth.hpp
+HEADERS += ../libsynth/include/libsynth.hpp
 
 INCLUDEPATH += ../libsynth
 
