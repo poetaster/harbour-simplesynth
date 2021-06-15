@@ -1,0 +1,7 @@
+/home/mwa/src/synth/lib/CMakeFiles/install/strip.dir
+/home/mwa/src/synth/lib/CMakeFiles/edit_cache.dir
+/home/mwa/src/synth/lib/CMakeFiles/synthetizer.dir
+/home/mwa/src/synth/lib/CMakeFiles/rebuild_cache.dir
+/home/mwa/src/synth/lib/CMakeFiles/list_install_components.dir
+/home/mwa/src/synth/lib/CMakeFiles/install/local.dir
+/home/mwa/src/synth/lib/CMakeFiles/install.dir
