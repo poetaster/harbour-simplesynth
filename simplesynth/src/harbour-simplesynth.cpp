@@ -1,14 +1,31 @@
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
-
 #include <sailfishapp.h>
-#include "../libsynth/include/libsynth.hpp"
-void makeAsound() {
-    // initial instrument definition for testing
-    string input = "fm 100 150 am 0 100 square 100:20 square 39 adsr 1:0 1000:0 2000:100 5001:100 6000:-100 8000:0 loop level 1";
 
-    long duration = 30000;
+#include <QDir>
+#include <QGuiApplication>
+#include <QLocale>
+#include <QQuickView>
+#include <QScopedPointer>
+#include <QStandardPaths>
+#include <QString>
+#include <QStringList>
+#include <QTranslator>
+#include <QtQml>
+#include <QDebug>
+
+#include "synthesizer.h"
+#include "../libsynth/include/libsynth.hpp"
+
+void makeAsound() {
+
+    // initial instrument definition for testing
+    //string input = "fm 100 150 am 0 100 square 100:20 square 39 adsr 1:0 1000:0 2000:100 5001:100 6000:-100 8000:0 loop level 1";
+    //string input = "1000 fm 100 150 am 0 100";
+    string input = "fm 60 140 { fm 60 140 modulator sinus 200 sinus 10 } sinus 1";
+
+    long duration = 600;
     uint32_t ech = 48000;
     const int BUF_LENGTH = 1024;
 
@@ -47,18 +64,27 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    // Exemple of external event that can modify the
-    // generated sound (see mousewheel.synth)
+    //return SailfishApp::main(argc, argv);
 
-    /*
-     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
-    QScopedPointrer<QQuickView> view(SailfishApp::createView());
-    view->setSource(SailfishApp::pathTo("qml/harbour-simplesynth.qml"));
-    view->setTitle("Simplesynth");
-    view->showFullScreen();
-    return app->exec();
-    */
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+
     makeAsound();
-    return SailfishApp::main(argc, argv);
+
+    QTranslator *appTranslator = new QTranslator;
+    appTranslator->load("harbour-simplesynth-" + QLocale::system().name(), SailfishApp::pathTo("translations").path());
+    app->installTranslator(appTranslator);
+
+    //qmlRegisterType<SoundGenerator>("de.poetaster.sailsynth", 1, 0, "SoundGenerator");
+    qmlRegisterType<Synthesizer>("de.poetaster.sailsynth", 1, 0, "Synthesizer");
+
+    QScopedPointer<QQuickView> view(SailfishApp::createView());
+    Synthesizer synth;
+    view->engine()->rootContext()->setContextProperty("synth", &synth);
+
+    view->setSource(SailfishApp::pathTo("qml/harbour-simplesynth.qml"));
+    view->setTitle("SailSynth");
+    view->show();
+
+    return app->exec();
 }
 

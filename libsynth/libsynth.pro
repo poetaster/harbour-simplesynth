@@ -1,4 +1,6 @@
 TEMPLATE = lib
+CONFIG += qt warn_on
+QT -= gui
 
 SOURCES += \
     src/libsynth.cpp \
@@ -16,23 +18,18 @@ SOURCES += \
 HEADERS += include/libsynth.hpp
 
 PKGCONFIG += sdl2 SDL2_mixer
-CONFIG += link_pkgconfig
-
-QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
-#INSTALLS += "/usr/share/$${TARGET}/lib"
+#CONFIG += link_pkgconfig
 
 # does this, I think, target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDLMIXER_LIBRARIES})
 
 # NONSENSE
 TARGET = synthetizer
-#DESTDIR = ../simplesynth
-#INSTALLS += "/usr/share/harbour-simplesynth/lib"
-#DESTDIR += "/usr/share/harbour-simplesynth/lib"
-#INSTALLS += lib
 
-#TARGET +=  synth.so
-#DESTDIR = "lib"
-#DESTDIR = .
+#DEFINES += QUAZIP_BUILD
+#CONFIG(staticlib): DEFINES += QUAZIP_STATIC
 
-#DISTFILES += \
-#    libsynth.pri
+CONFIG += staticlib
+
+target.path=/usr/share/harbour-simplesynth/lib
+
+INSTALLS += target

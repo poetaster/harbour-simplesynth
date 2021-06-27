@@ -20,26 +20,32 @@ PKGCONFIG += sdl2 SDL2_mixer sailfishapp
 CONFIG += link_pkgconfig
 
 # include our shared library and install it
-message($$OUT_PWD)
 
-LIBS += -L$$OUT_PWD/../libsynth -lsynthetizer
-libsynth.files += ../libsynth/libsynthetizer.so.1.0.0
-libsynth.files += ../libsynth/libsynthetizer.so.1.0
-libsynth.files += ../libsynth/libsynthetizer.so.1
-libsynth.files += ../libsynth/libsynthetizer.so
-libsynth.path = /usr/share/$${TARGET}/lib
-INSTALLS += libsynth
+LIBS += -L$$OUT_PWD/../libsynth/ -lsynthetizer
 
-message($$TARGET)
-#LIBS += -L../libsynth
-#LIBS += -llibsynth
+#libsynth.files += ../libsynth/libsynthetizer.so.1.0.0
+#libsynth.files += ../libsynth/libsynthetizer.so.1.0
+#libsynth.files += ../libsynth/libsynthetizer.so.1
+#libsynth.files += ../libsynth/libsynthetizer.so
+#libsynth.path = /usr/share/$${TARGET}/lib
+#INSTALLS += libsynth
+
 QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
 
-SOURCES += src/harbour-simplesynth.cpp
-# Headers
-HEADERS += ../libsynth/include/libsynth.hpp
+SOURCES += src/harbour-simplesynth.cpp \
+    src/synthesizer.cpp
 
-INCLUDEPATH += ../libsynth
+# additional support c++ qml DONT think this works.
+CONFIG += qmltypes qtqml
+QML_IMPORT_NAME = de.poetaster.sailsynth
+QML_IMPORT_MAJOR_VERSION = 1
+
+# Headers
+HEADERS += 	../libsynth/include/libsynth.hpp \
+                src/synthesizer.h
+
+INCLUDEPATH += ../libsynth/ \
+                src/
 
 OTHER_FILES += $$files(rpm/*)
 

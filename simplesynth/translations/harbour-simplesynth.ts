@@ -15,11 +15,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UI Template</source>
+        <source>Synthesizer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hello Sailors</source>
+        <source>Enter Voice Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submit Voice Description to Engine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

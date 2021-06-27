@@ -1,11 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+//import de.poetaster.sailsynth 1.0
 Page {
     id: page
+    function updateSound(){
+        synth.voiceDesc = voiceText.text;
+        synth.makeAsound();
+    }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
-    allowedOrientations: Orientation.All
+   allowedOrientations: Orientation.All
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
@@ -30,11 +34,35 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("UI Template")
+                title: qsTr("Synthesizer")
             }
             Label {
                 x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
+                width: parent.width
+                text: qsTr("Enter Voice Description")
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeExtraLarge
+            }
+            TextField {
+                id: voiceText
+                width: parent.width
+                x: Theme.horizontalPageMargin
+                text: "600 fm 60 140 { fm 60 140 modulator sinus 200 sinus 10 } sinus 1"
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeSmall
+            }
+            Button{
+                x: Theme.horizontalPageMargin
+                width: parent.width /2
+                text: qsTr("Submit Voice Description to Engine")
+                color: Theme.secondaryHighlightColor
+                onClicked:  updateSound();
+
+            }
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width
+                text: synth.voiceDesc
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }

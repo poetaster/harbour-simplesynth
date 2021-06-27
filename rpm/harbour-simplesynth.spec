@@ -6,8 +6,8 @@
 Name:       harbour-simplesynth
 
 # >> macros
-%define __provides_exclude_from ^%{_datadir}/.*$
-%define __requires_exclude ^libsynth.*$
+%define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
+%define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 # << macros
 
 Summary:    An Audio Synth with a simple QML UI

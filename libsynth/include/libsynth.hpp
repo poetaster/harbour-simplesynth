@@ -79,7 +79,7 @@ class SoundGenerator
 	// Note: fade does not change the actual volume
 	// one may want to change it before calling fade_xx
 	static void fade_in(int time) { fade(1, time); }
-  static void fade_out(int time) { fade(-1, time); }
+    static void fade_out(int time) { fade(-1, time); }
 
 	static void setVolume(sgfloat vol) { main_volume = vol; }
 	static sgfloat getVolume() { return main_volume; }

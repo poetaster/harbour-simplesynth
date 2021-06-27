@@ -6,8 +6,8 @@ SUBDIRS += \
     simplesynth
 
 
-simplesynth.depends = libsynth
+#simplesynth.depends = libsynthetizer
 
 OTHER_FILES += 	rpm/harbour-simplesynth.yaml \
                 rpm/harbour-simplesynth.spec
-message($$SUBDIRS)
+#message($$SUBDIRS)
