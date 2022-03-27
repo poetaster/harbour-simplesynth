@@ -1,11 +1,16 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+
 //import de.poetaster.sailsynth 1.0
+
 Page {
+
     id: page
+    //property var model: synth
     function updateSound(){
         synth.voiceDesc = voiceText.text;
         synth.makeAsound();
+        //synth.play(voiceText.text)
     }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
@@ -43,11 +48,12 @@ Page {
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
-            TextField {
+            TextArea {
                 id: voiceText
                 width: parent.width
                 x: Theme.horizontalPageMargin
-                text: "600 fm 60 140 { fm 60 140 modulator sinus 200 sinus 10 } sinus 1"
+                text: "reverb 100:50 fm 90 100 sinus 1440:50 sinus 1.5 \n\n" +
+                       "fm 60 140 { fm 60 140 modulator sinus 200 sinus 10 } sinus 1"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
             }

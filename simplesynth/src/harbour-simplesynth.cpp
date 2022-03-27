@@ -1,19 +1,8 @@
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
-#include <sailfishapp.h>
 
-#include <QDir>
-#include <QGuiApplication>
-#include <QLocale>
-#include <QQuickView>
-#include <QScopedPointer>
-#include <QStandardPaths>
-#include <QString>
-#include <QStringList>
-#include <QTranslator>
-#include <QtQml>
-#include <QDebug>
+#include <sailfishapp.h>
 
 #include "synthesizer.h"
 #include "../libsynth/include/libsynth.hpp"
@@ -28,18 +17,17 @@ void makeAsound() {
     long duration = 600;
     uint32_t ech = 48000;
     const int BUF_LENGTH = 1024;
+    const int fade_time=50;
 
     //SoundGenerator::play(SoundGenerator::factory("fm 50 150 sinus 440 hook_speed"));
+
+    SoundGenerator::setVolume(0);   // Avoid sound clicks at start
+    SoundGenerator::fade_in(10);
+    SoundGenerator::setVolume(0.6);
 
     SoundGenerator* g = SoundGenerator::factory(input);
     SoundGenerator::play(g);
 
-    SoundGenerator::setVolume(0);   // Avoid sound clicks at start
-    SoundGenerator::fade_in(10);
-    SoundGenerator::setVolume(0);   // Avoid sound clicks at start
-    SoundGenerator::fade_in(10);
-
-    const int fade_time=50;
 
     if (duration > fade_time) {
             SDL_Delay(duration-fade_time); // Play for ms
@@ -51,6 +39,7 @@ void makeAsound() {
     }
     SDL_Delay(1000); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
 
+    //SoundGenerator::stop(g);
 }
 
 int main(int argc, char *argv[])
@@ -66,25 +55,26 @@ int main(int argc, char *argv[])
 
     //return SailfishApp::main(argc, argv);
 
-    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    //QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QGuiApplication *app(SailfishApp::application(argc, argv));
+    QCoreApplication::setOrganizationName("harbour-simplesynth");
+    QCoreApplication::setApplicationName("harbour-simplesynth");
 
-    makeAsound();
+    //makeAsound();
 
     QTranslator *appTranslator = new QTranslator;
     appTranslator->load("harbour-simplesynth-" + QLocale::system().name(), SailfishApp::pathTo("translations").path());
     app->installTranslator(appTranslator);
 
-    //qmlRegisterType<SoundGenerator>("de.poetaster.sailsynth", 1, 0, "SoundGenerator");
     qmlRegisterType<Synthesizer>("de.poetaster.sailsynth", 1, 0, "Synthesizer");
 
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
+    QQuickView *view(SailfishApp::createView());
+    //QScopedPointer<QQuickView> view(SailfishApp::createView());
+    // register the type for qml
     Synthesizer synth;
     view->engine()->rootContext()->setContextProperty("synth", &synth);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-simplesynth.qml"));
-    view->setTitle("SailSynth");
     view->show();
-
     return app->exec();
 }
-
