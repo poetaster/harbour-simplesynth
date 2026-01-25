@@ -36,9 +36,8 @@ SOURCES += src/harbour-simplesynth.cpp \
     src/synthesizer.cpp
 
 # additional support c++ qml DONT think this works.
-CONFIG += qmltypes qtqml
-QML_IMPORT_NAME = de.poetaster.sailsynth
-QML_IMPORT_MAJOR_VERSION = 1
+#QML_IMPORT_NAME = de.poetaster.sailsynth
+#QML_IMPORT_MAJOR_VERSION = 1
 
 # Headers
 HEADERS += 	../libsynth/include/libsynth.hpp \

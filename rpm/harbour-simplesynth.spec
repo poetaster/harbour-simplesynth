@@ -6,6 +6,7 @@
 Name:       harbour-simplesynth
 
 # >> macros
+%define _binary_payload w2.xzdio
 %define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 # << macros

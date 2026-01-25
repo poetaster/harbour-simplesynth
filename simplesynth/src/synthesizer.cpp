@@ -1,10 +1,15 @@
 #include "synthesizer.h"
 #include "../libsynth/include/libsynth.hpp"
 
-Synthesizer::Synthesizer(QObject *parent) :
-    QObject(parent)
+
+Synthesizer::Synthesizer(QObject *parent) : QObject(parent)
 {
 }
+
+Synthesizer::~Synthesizer(){
+    m_voiceDesc = "fm 50 150 sinus 440 hook_speed";
+}
+
 
 QString Synthesizer::getVoiceDesc()
 {
@@ -39,9 +44,9 @@ void Synthesizer::makeAsound() {
 
     QString input = this->getVoiceDesc();
     string blah = qPrintable(input);
-    std::cout << blah << std::endl;
+    //std::cout << blah << std::endl;
 
-    long duration = 1000;
+    long duration = 5000;
     uint32_t ech = 48000;
     const int BUF_LENGTH = 1024;
 
@@ -65,9 +70,9 @@ void Synthesizer::makeAsound() {
             SoundGenerator::fade_out(fade_time);
             SDL_Delay(fade_time); // Play for ms (while fading out)
     }
-    SDL_Delay(1000); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
-    //SoundGenerator::remove(g);
-    //g = 0;
+    SDL_Delay(100); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
+    SoundGenerator::remove(g);
+    g = 0;
 }
 
 /*

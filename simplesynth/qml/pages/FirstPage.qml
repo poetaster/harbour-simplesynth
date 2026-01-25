@@ -1,20 +1,27 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
-//import de.poetaster.sailsynth 1.0
+import de.poetaster.sailsynth 1.0
 
 Page {
 
     id: page
     //property var model: synth
     function updateSound(){
-        synth.voiceDesc = voiceText.text;
-        synth.makeAsound();
+        synth.setVoiceDesc(voiceText.text);
+        //synth.makeAsound();
         //synth.play(voiceText.text)
     }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
    allowedOrientations: Orientation.All
+
+   Synthesizer {
+       id: synth
+       onVoiceDescChanged:  {
+           // console.log("progress " + progress)
+       }
+   }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
@@ -52,11 +59,14 @@ Page {
                 id: voiceText
                 width: parent.width
                 x: Theme.horizontalPageMargin
-                text: "reverb 100:50 fm 90 100 sinus 1440:50 sinus 1.5 \n\n" +
-                       "fm 60 140 { fm 60 140 modulator sinus 200 sinus 10 } sinus 1"
+                text: "fm 60 140 { fm 60 140 generator sinus 800 sinus 10 } sinus 1"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
             }
+            TextField {
+
+            }
+
             Button{
                 x: Theme.horizontalPageMargin
                 width: parent.width /2
@@ -64,14 +74,14 @@ Page {
                 color: Theme.secondaryHighlightColor
                 onClicked:  updateSound();
 
-            }
+            }/*
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width
-                text: synth.voiceDesc
+                text: Synthesizer.voiceDesc
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
-            }
+            }*/
         }
     }
 }

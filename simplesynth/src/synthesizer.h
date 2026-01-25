@@ -1,22 +1,18 @@
 #ifndef SYNTHESIZER_H
 #define SYNTHESIZER_H
 
-#include <QObject>
-#include <QString>
-#include <QtQml>
-#include <qqml.h>
+#include <QtCore/QObject>
 
 class Synthesizer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString voiceDesc READ getVoiceDesc WRITE setVoiceDesc NOTIFY voiceDescChanged)
+    //Q_PROPERTY(QString voiceDesc READ)
 /*QML_ELEMENT*/
     ;
 
 public:
-    explicit Synthesizer(QObject* parent = 0);
-    //explicit Synthesizer(QObject *parent = nullptr);
-
+    explicit Synthesizer(QObject *parent = nullptr);
+    ~Synthesizer();
     QString getVoiceDesc();
     Q_INVOKABLE void setVoiceDesc(const QString &voiceDesc);
     Q_INVOKABLE void makeAsound();
