@@ -8,9 +8,11 @@ Page {
     id: page
     //property var model: synth
     function updateSound(){
+
+        synth.setDuration(parseInt(duration.text));
         synth.setVoiceDesc(voiceText.text);
         //synth.makeAsound();
-        //synth.play(voiceText.text)
+        synth.play()
     }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
@@ -53,7 +55,7 @@ Page {
                 width: parent.width
                 text: qsTr("Enter Voice Description")
                 color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+                font.pixelSize: Theme.fontSizeLarge
             }
             TextArea {
                 id: voiceText
@@ -64,6 +66,11 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
             }
             TextField {
+                id:duration
+                width:parent.width
+                text: "1000"
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeSmall
 
             }
 

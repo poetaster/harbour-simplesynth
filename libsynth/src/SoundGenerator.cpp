@@ -473,8 +473,8 @@ bool SoundGenerator::remove(SoundGenerator* generator)
 		list_generator.remove(generator);
 		list_generator_size = list_generator.size();
 	}
-	else
-		cerr << "libsynth, WARNING : Unable to remove sound generator " << generator << ", size=" << list_generator_size << endl;
+    else
+        cerr << "libsynth, WARNING : Unable to remove sound generator " << generator << ", size=" << list_generator_size << endl;
 	mtx.unlock();
 	return bRet;
 }

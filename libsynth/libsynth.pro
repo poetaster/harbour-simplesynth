@@ -23,7 +23,7 @@ PKGCONFIG += sdl2 SDL2_mixer
 # does this, I think, target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDLMIXER_LIBRARIES})
 
 # NONSENSE
-TARGET = synthetizer
+TARGET = lsynthetizer
 
 #DEFINES += QUAZIP_BUILD
 #CONFIG(staticlib): DEFINES += QUAZIP_STATIC

@@ -324,10 +324,10 @@ class SoundGeneratorVarHook : public SoundGenerator
 		right += delta;
 	}
 
-	virtual void help(ostream &out) const override
+    /*virtual void help(ostream &out) const override
 	{
 		out << "Help not defined (SoundGeneratorVarHook)" << endl;
-	}
+    }*/
 
   protected:
 
