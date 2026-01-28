@@ -1,5 +1,6 @@
 #include "synthesizer.h"
 #include "../libsynth/include/libsynth.hpp"
+#include <QtConcurrent/QtConcurrent>
 
 Synthesizer::Synthesizer(QObject *parent) : QObject(parent)
 {
@@ -12,12 +13,10 @@ Synthesizer::~Synthesizer(){
     m_duration = 1000;
     m_fadeIn = 20;
     m_fadeOut = 20;
-
-    engine_speed = new SpeedHook();
-    engine_speed->speed = 1;
-    freq_one = new FreqOneHook();
-    freq_one->freq = 50;
+    //n_speed->speed = 1 ;
+    //freq_one->freq = 50;
 }
+
 
 QString Synthesizer::getVoiceDesc()
 {
@@ -28,14 +27,26 @@ void Synthesizer::setVoiceDesc(const QString &voiceDesc)
 {
     if (voiceDesc == m_voiceDesc)
         return;
-    // ok remove the old from SoundGen
-    //removeGenerator(m_voiceDesc);
     m_voiceDesc = voiceDesc;
     emit voiceDescChanged();
 }
 
+void Synthesizer::playNonBlocking(){
+    w = new Player;
+    w->setDuration(m_duration);
+    w->setGenerator(m_voiceDesc);
+    t = new QThread;
+    w->moveToThread(t);
+    connect(this, SIGNAL(start()), w, SLOT(play()));
+    connect(w, SIGNAL(result(bool)), this, SIGNAL(result(bool)));
+    this->start();
+    t->start();
+    //w->play();
+}
+
 void Synthesizer::play()
 {
+    emit playing();
     SoundGenerator::setVolume(0);   // Avoid sound clicks at start
     SoundGenerator::fade_in(10);
     SoundGenerator::setVolume(0.6);   // Avoid sound clicks at start
@@ -45,7 +56,6 @@ void Synthesizer::play()
     // remove old instance first
     SoundGenerator::remove(m_g);
     m_g = SoundGenerator::factory(qPrintable(input));
-
     SoundGenerator::play(m_g);
 
     const int fade_time=10; //m_fadeIn;
@@ -79,10 +89,12 @@ void Synthesizer::setFadeOut(long duration)
 }
 
 void Synthesizer::setSpeedOne(long duration) {
-    engine_speed->speed = duration;
+   n_speed->speed = duration;
+   //w->setSpeedOne( duration);
 }
 void Synthesizer::setFreqOne(long frequency) {
     freq_one->freq = frequency;
+    //w->setFreqOne( frequency);
 }
 /*
 atomic<float> engine_speed;     // Float value that represents the engine speed

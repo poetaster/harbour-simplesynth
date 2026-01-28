@@ -8,23 +8,27 @@ Page {
     id: page
     //property var model: synth
     function updateSound(){
-
         synth.setDuration(parseInt(duration.text));
         synth.setVoiceDesc(voiceText.text);
-        //synth.makeAsound();
-        synth.play()
+        synth.play();
+
+        //var msg = {'action': 'play', 'sy': synth};
+        //worker.sendMessage(msg);
     }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
-   allowedOrientations: Orientation.All
+    allowedOrientations: Orientation.All
 
-   Synthesizer {
-       id: synth
-       onVoiceDescChanged:  {
-           // console.log("progress " + progress)
-       }
-   }
-
+    Synthesizer {
+        id: synth
+        onVoiceDescChanged:  {
+            // console.log("progress " + progress)
+        }
+    }
+    WorkerScript {
+        id: worker
+        source: "worker.js"
+    }
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
@@ -81,7 +85,35 @@ Page {
                 color: Theme.secondaryHighlightColor
                 onClicked:  updateSound();
 
-            }/*
+            }
+            Slider {
+                id: speedSlider
+                value: 1
+                label:"SpeedOne"
+                minimumValue: 0
+                maximumValue: 5
+                //stepSize: 1
+                width: parent.width
+                valueText: value
+                onValueChanged: synth.setSpeedOne(value)
+            }
+            Slider {
+                id: f1Slider
+                value: 30
+                width: parent.width
+                minimumValue: 30
+                maximumValue: 3000
+                stepSize: 1
+                //width: parent.width
+                //handleVisible: highlightToggle.checked
+                valueText: value //valueIndicatorToggle.checked ? value : ""
+                label: "FreqOne"
+                //Rectangle { anchors.fill: parent; color: "red"; opacity: Theme.highlightBackgroundOpacity; z:-1; visible: sizeToggle.checked }
+                onValueChanged: synth.setFreqOne(value)
+            }
+
+
+            /*
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width
@@ -91,4 +123,5 @@ Page {
             }*/
         }
     }
+
 }
