@@ -19,7 +19,7 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
-    Synthesizer {
+    SynthController {
         id: synth
         onVoiceDescChanged:  {
             // console.log("progress " + progress)
@@ -65,14 +65,14 @@ Page {
                 id: voiceText
                 width: parent.width
                 x: Theme.horizontalPageMargin
-                text: "fm 60 140 { fm 60 140 generator sinus 800 sinus 10 } sinus 1"
+                text: "fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
             }
             TextField {
                 id:duration
                 width:parent.width
-                text: "1000"
+                text: "3000"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
 
@@ -91,8 +91,8 @@ Page {
                 value: 1
                 label:"SpeedOne"
                 minimumValue: 0
-                maximumValue: 5
-                //stepSize: 1
+                maximumValue: 20
+                stepSize: 1
                 width: parent.width
                 valueText: value
                 onValueChanged: synth.setSpeedOne(value)

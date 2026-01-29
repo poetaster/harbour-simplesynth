@@ -30,18 +30,19 @@ LIBS += -L$$OUT_PWD/../libsynth/ -lsynthetizer
 #libsynth.path = /usr/share/$${TARGET}/lib
 #INSTALLS += libsynth
 
-QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
-
-SOURCES += src/harbour-simplesynth.cpp \
-    src/synthesizer.cpp
-
-# additional support c++ qml DONT think this works.
+# additional support c++ qml  not needed
 #QML_IMPORT_NAME = de.poetaster.sailsynth
 #QML_IMPORT_MAJOR_VERSION = 1
 
-# Headers
+QMAKE_RPATHDIR += /usr/share/$${TARGET}/lib
+
+SOURCES += src/harbour-simplesynth.cpp \
+           src/synthesizer.cpp \
+           src/synthcontroller.cpp
+
 HEADERS += 	../libsynth/include/libsynth.hpp \
-                src/synthesizer.h
+                src/synthesizer.h \
+                src/synthcontroller.h
 
 INCLUDEPATH += ../libsynth/ \
                 src/

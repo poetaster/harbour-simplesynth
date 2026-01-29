@@ -8,6 +8,7 @@
 #include <QCoreApplication>
 
 #include "synthesizer.h"
+#include "synthcontroller.h"
 #include "../libsynth/include/libsynth.hpp"
 
 int main(int argc, char *argv[])
@@ -29,14 +30,18 @@ int main(int argc, char *argv[])
     //QCoreApplication::setApplicationName("harbour-simplesynth");
 
     QQuickView *view(SailfishApp::createView());
-    QQmlEngine* engine = view->engine();
+    //QQmlEngine* engine = view->engine();
 
     QTranslator *appTranslator = new QTranslator;
     appTranslator->load("harbour-simplesynth-" + QLocale::system().name(), SailfishApp::pathTo("translations").path());
     app->installTranslator(appTranslator);
 
     qmlRegisterType<Synthesizer>("de.poetaster.sailsynth", 1, 0, "Synthesizer");
+    qmlRegisterType<SynthController>("de.poetaster.sailsynth", 1, 0, "SynthController");
 
+    // direct object inclusion
+    //Synthesizer synth;
+    //view->engine()->rootContext()->setContextProperty("synth", &synth);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-simplesynth.qml"));
     view->show();

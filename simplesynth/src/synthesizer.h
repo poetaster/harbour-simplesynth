@@ -5,11 +5,10 @@
 #include <QtCore/QObject>
 #include "../libsynth/include/libsynth.hpp"
 
-
 class SpeedHook : public SoundGeneratorVarHook<float>
 {
 public:
-    SpeedHook() : SoundGeneratorVarHook(&speed, 0, 200, "n_speed"){};
+    SpeedHook() : SoundGeneratorVarHook(&speed, 0, 200, "s1"){};
    atomic<float> speed;  // from 0 to 200
 
 };
@@ -17,60 +16,21 @@ public:
 class FreqOneHook : public SoundGeneratorVarHook<long>
 {
 public:
-   FreqOneHook() : SoundGeneratorVarHook(&freq, 1, 1000, "freq_one"){};
+   FreqOneHook() : SoundGeneratorVarHook(&freq, 1, 1000, "f1"){};
    atomic<long> freq;  // from 1 to 1000
 
 };
-/* Player class for running the audio play function in a separate thread
- */
-
-class Player : public QObject {
-    Q_OBJECT
-  public slots:
-    void setGenerator(QString generator) {
-        m_voiceDesc = generator;
-        qDebug() << "generator " << m_voiceDesc ; //<< " for " << m_duration;
-    }
-    void setDuration(long time) {
-        m_duration  = time;
-        qDebug() << "duration " << m_duration ; //<< " for " << m_duration;
-    }
-    void setSpeedOne(long duration) {
-        n_speed->speed = duration;
-    }
-    void setFreqOne(long frequency) {
-        freq_one->freq = frequency;
-    }
-    void play() {
-        SoundGenerator::setVolume(0);   // Avoid sound clicks at start
-        SoundGenerator::fade_in(10);
-        SoundGenerator::setVolume(0.6);   // Avoid sound clicks at start
-        // remove old instance first
-        SoundGenerator::remove(this->mg);
-        this->mg = SoundGenerator::factory(qPrintable(m_voiceDesc));
-        SoundGenerator::play(this->mg);
-        const int fade_time=10; //m_fadeIn;
-        long duration = m_duration;
-        if (duration > fade_time) {
-                SDL_Delay(duration-fade_time); // Play for ms
-                SoundGenerator::fade_out(fade_time);
-                SDL_Delay(fade_time); // Play for 100 ms (while fade out)
-        } else {
-                SoundGenerator::fade_out(fade_time);
-                SDL_Delay(fade_time); // Play for ms (while fading out)
-        }
-        SDL_Delay(10); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
-     result(true);
-    }
-  signals:
-    void result(bool r);
-  private:
-    SoundGenerator*  mg;
-    QString m_voiceDesc;
-    long m_duration;
-    SpeedHook* n_speed = new SpeedHook();
-    FreqOneHook* freq_one = new FreqOneHook();
+/*
+atomic<float> engine_speed;	// Float value that represents the engine speed
+class EngineSpeedHook : public SoundGeneratorVarHook<float>
+{
+    public:
+        EngineSpeedHook() : SoundGeneratorVarHook(&engine_speed, 0.0, 100.0, "engine_speed"){}
 };
+
+static EngineSpeedHook instance;	// Needed to register the 'engine_speed' hook so it can be used.a
+*/
+
 
 class Synthesizer : public QObject
 {
@@ -81,8 +41,13 @@ class Synthesizer : public QObject
 
 public:
     explicit Synthesizer(QObject *parent = nullptr);
-    ~Synthesizer();
-    QString getVoiceDesc();
+    ~Synthesizer(){
+      delete m_g;
+      delete s1;
+      delete f1;
+    }
+
+    Q_INVOKABLE QString getVoiceDesc();
     Q_INVOKABLE void setVoiceDesc(const QString &voiceDesc);
     Q_INVOKABLE void setDuration(long duration);
     Q_INVOKABLE void setFadeIn(long duration);
@@ -90,12 +55,10 @@ public:
     Q_INVOKABLE void setSpeedOne(long duration);
     Q_INVOKABLE void setFreqOne(long freq);
     Q_INVOKABLE void play();
-    Q_INVOKABLE void playNonBlocking();
 
 signals:
     void voiceDescChanged();
     void playing();
-    void start();
     void result(bool r);
 
 private:
@@ -104,12 +67,10 @@ private:
     long m_fadeIn;
     long m_fadeOut;
     SoundGenerator*  m_g; // = SoundGenerator::factory(qPrintable(m_voiceDesc));
-    SpeedHook* n_speed = new SpeedHook();
-    FreqOneHook* freq_one = new FreqOneHook();
+    SpeedHook* s1 ;   //= new SpeedHook();
+    FreqOneHook* f1 ; //= new FreqOneHook();
     uint32_t ech = 48000;
     const int BUF_LENGTH = 1024;
-    QThread * t;
-    Player * w;
 };
 
 

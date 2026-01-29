@@ -3,8 +3,7 @@
 
 #include <QDebug>
 #include <QtCore/QObject>
-#include "../libsynth/include/libsynth.hpp"
-
+#include "synthesizer.h"
 
 class SynthController : public QObject
 {
@@ -15,7 +14,7 @@ class SynthController : public QObject
 
 public:
     explicit SynthController(QObject *parent = nullptr);
-    ~SyntheController();
+    ~SynthController();
     QString getVoiceDesc();
     Q_INVOKABLE void setVoiceDesc(const QString &voiceDesc);
     Q_INVOKABLE void setDuration(long duration);
@@ -24,7 +23,6 @@ public:
     Q_INVOKABLE void setSpeedOne(long duration);
     Q_INVOKABLE void setFreqOne(long freq);
     Q_INVOKABLE void play();
-    Q_INVOKABLE void playNonBlocking();
 
 signals:
     void voiceDescChanged();

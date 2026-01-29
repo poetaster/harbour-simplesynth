@@ -1,22 +1,20 @@
-#include "synthesizer.h"
 #include "../libsynth/include/libsynth.hpp"
-#include <QtConcurrent/QtConcurrent>
+#include "synthesizer.h"
+#include <QThread>
 
 Synthesizer::Synthesizer(QObject *parent) : QObject(parent)
 {
-}
-
-Synthesizer::~Synthesizer(){
     // default voice
     m_voiceDesc = "sinus 440";
     // default duration
     m_duration = 1000;
     m_fadeIn = 20;
     m_fadeOut = 20;
-    //n_speed->speed = 1 ;
-    //freq_one->freq = 50;
+    s1 = new SpeedHook();
+    f1 = new FreqOneHook();
+    s1->speed = 1 ;
+    f1->freq = 50;
 }
-
 
 QString Synthesizer::getVoiceDesc()
 {
@@ -31,22 +29,9 @@ void Synthesizer::setVoiceDesc(const QString &voiceDesc)
     emit voiceDescChanged();
 }
 
-void Synthesizer::playNonBlocking(){
-    w = new Player;
-    w->setDuration(m_duration);
-    w->setGenerator(m_voiceDesc);
-    t = new QThread;
-    w->moveToThread(t);
-    connect(this, SIGNAL(start()), w, SLOT(play()));
-    connect(w, SIGNAL(result(bool)), this, SIGNAL(result(bool)));
-    this->start();
-    t->start();
-    //w->play();
-}
-
 void Synthesizer::play()
 {
-    emit playing();
+    //emit playing();
     SoundGenerator::setVolume(0);   // Avoid sound clicks at start
     SoundGenerator::fade_in(10);
     SoundGenerator::setVolume(0.6);   // Avoid sound clicks at start
@@ -70,6 +55,8 @@ void Synthesizer::play()
             SDL_Delay(fade_time); // Play for ms (while fading out)
     }
     SDL_Delay(10); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
+    // signal we're finished
+    result(true);
 
 }
 
@@ -89,12 +76,10 @@ void Synthesizer::setFadeOut(long duration)
 }
 
 void Synthesizer::setSpeedOne(long duration) {
-   n_speed->speed = duration;
-   //w->setSpeedOne( duration);
+   s1->speed = duration;
 }
 void Synthesizer::setFreqOne(long frequency) {
-    freq_one->freq = frequency;
-    //w->setFreqOne( frequency);
+    f1->freq = frequency;
 }
 /*
 atomic<float> engine_speed;     // Float value that represents the engine speed
