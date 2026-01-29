@@ -35,13 +35,13 @@ Page {
         fetchLocal();
     }
     function fetchLocal(){
-        Locs.loadJSON("../js/presets.json", function(doc) {
+        Locs.loadJSON("../js/engines.json", function(doc) {
             var response = JSON.parse(doc.responseText);
             listModel.clear();
             presets = response;
             for (var i = 0; i < response.length ; i++) {
                 listModel.append(response[i]);
-                 presets[i] = response[i];
+                presets[i] = response[i];
                 if (debug) console.debug(JSON.stringify(presets[i]))
             };
         });
@@ -74,7 +74,7 @@ Page {
             id: header
             title: qsTr("Choose Preset")
         }
-/*
+        /*
         SearchField {
             placeholderText: qsTr("Search")
             id: searchField
@@ -88,49 +88,48 @@ Page {
             }
         }*/
 
-        Column {
-            id: column
-            width: parent.width
-            //anchors.top: searchField.bottom
-
-            SilicaListView {
-                id:sListview
-                 anchors.fill: parent
-                x: Theme.horizontalPageMargin
-                //spacing: Theme.paddingSmall
-                model:   ListModel {
-                    id: listModel
-                    /*
+        SilicaListView {
+            id:sListview
+            anchors.fill: parent
+            x: Theme.horizontalPageMargin
+            spacing: Theme.paddingLarge
+            model:   ListModel {
+                id: listModel
+                /*
                     function update() {
                         clear()
                         if (searchField.text != "") {
                             searchPage.search(searchField.text);
                         }
                     }*/
-                    //Component.onCompleted:update()
+                //Component.onCompleted:update()
+            }
+            delegate: BackgroundItem {
+                x: Theme.horizontalPageMargin
+                id:delegate
+                Label {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    highlighted: index === root.currentIndex
+                    text: model.name
+                    truncationMode: TruncationMode.Fade
                 }
-                delegate: ListItem {
-                    Label {
-                        text: model.name
-                        truncationMode: TruncationMode.Fade
-                    }
-                    Label {
-                        text: model.def
-                        truncationMode: TruncationMode.Fade
-                    }
-                    onClicked: {
-                        //Store.addLocation(model);
-                        currentEngine = model.def
-                        pageStack.pop()
-                       /* pageStack.push(Qt.resolvedUrl("OverviewPage.qml"), {
+                /*
+                Label {
+                    text: model.def
+                    truncationMode: TruncationMode.Fade
+                }*/
+                onClicked: {
+                    //Store.addLocation(model);
+                    currentEngine = model.def
+                    pageStack.pop()
+                    /* pageStack.push(Qt.resolvedUrl("OverviewPage.qml"), {
                                            "name": name,
                                            "lat": lat,
                                            "lon": lon}); */
-                    }
                 }
-                spacing: 2
-                VerticalScrollDecorator { flickable: sListview}
             }
+            VerticalScrollDecorator { flickable: sListview}
         }
     }
 }

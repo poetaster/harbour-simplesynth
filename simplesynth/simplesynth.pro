@@ -53,7 +53,8 @@ DISTFILES += qml/harbour-simplesynth.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
-    qml/pages/worker.js \
+    qml/pages/Presets.qml \
+    qml/js/*.js \
     ../rpm/harbour-simplesynth.changes.in \
     ../rpm/harbour-simplesynth.changes.run.in \
     ../rpm/harbour-simplesynth.spec \

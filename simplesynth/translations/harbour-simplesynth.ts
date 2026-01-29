@@ -11,10 +11,6 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <source>Show Page 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Synthesizer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,6 +20,17 @@
     </message>
     <message>
         <source>Submit Voice Description to Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Presets</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Presets</name>
+    <message>
+        <source>Choose Preset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

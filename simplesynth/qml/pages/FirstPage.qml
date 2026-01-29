@@ -5,13 +5,16 @@ import de.poetaster.sailsynth 1.0
 
 Page {
 
+    property bool playing: false
+
     id: page
     //property var model: synth
     function updateSound(){
-        synth.setDuration(parseInt(duration.text));
-        synth.setVoiceDesc(voiceText.text);
-        synth.play();
-
+        if (!playing) {
+          synth.setDuration(parseInt(duration.text));
+          synth.setVoiceDesc(voiceText.text);
+          synth.play();
+        }
         //var msg = {'action': 'play', 'sy': synth};
         //worker.sendMessage(msg);
     }
@@ -23,6 +26,9 @@ Page {
         id: synth
         onVoiceDescChanged:  {
             // console.log("progress " + progress)
+        }
+        onResult: {
+            page.playing = false;
         }
     }
     WorkerScript {
@@ -36,8 +42,8 @@ Page {
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                text: qsTr("Presets")
+                onClicked: pageStack.push(Qt.resolvedUrl("Presets.qml"))
             }
         }
 
@@ -65,9 +71,10 @@ Page {
                 id: voiceText
                 width: parent.width
                 x: Theme.horizontalPageMargin
-                text: "fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
+                text: currentEngine //"fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
+
             }
             TextField {
                 id:duration
@@ -91,7 +98,7 @@ Page {
                 value: 1
                 label:"SpeedOne"
                 minimumValue: 0
-                maximumValue: 20
+                maximumValue: 200
                 stepSize: 1
                 width: parent.width
                 valueText: value
@@ -101,8 +108,8 @@ Page {
                 id: f1Slider
                 value: 30
                 width: parent.width
-                minimumValue: 30
-                maximumValue: 3000
+                minimumValue: 1
+                maximumValue: 1000
                 stepSize: 1
                 //width: parent.width
                 //handleVisible: highlightToggle.checked

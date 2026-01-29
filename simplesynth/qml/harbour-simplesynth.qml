@@ -7,6 +7,9 @@ import "cover"
 
 ApplicationWindow
 {
+    id:root
+    property string currentEngine: "fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
+
     initialPage: Component { FirstPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All

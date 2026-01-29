@@ -20,16 +20,18 @@ public:
    atomic<long> freq;  // from 1 to 1000
 
 };
-/*
+
 atomic<float> engine_speed;	// Float value that represents the engine speed
+
 class EngineSpeedHook : public SoundGeneratorVarHook<float>
 {
     public:
         EngineSpeedHook() : SoundGeneratorVarHook(&engine_speed, 0.0, 100.0, "engine_speed"){}
+    atomic<float> engine_speed;	// Float value that represents the engine speed
 };
 
-static EngineSpeedHook instance;	// Needed to register the 'engine_speed' hook so it can be used.a
-*/
+//static EngineSpeedHook instance;	// Needed to register the 'engine_speed' hook so it can be used.a
+
 
 
 class Synthesizer : public QObject
@@ -69,6 +71,7 @@ private:
     SoundGenerator*  m_g; // = SoundGenerator::factory(qPrintable(m_voiceDesc));
     SpeedHook* s1 ;   //= new SpeedHook();
     FreqOneHook* f1 ; //= new FreqOneHook();
+    EngineSpeedHook* s2;
     uint32_t ech = 48000;
     const int BUF_LENGTH = 1024;
 };
