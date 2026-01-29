@@ -1,0 +1,16 @@
+[
+    {"name": "engine", "def": "define engine { fm 0 150 am 0 100 triangle 100:50 square 39 engine_speed } reverb 10:50 engine" },
+    {"name": "chopped sine", "def": "am 0 100 sinus 220 square 5"},
+    {"name": "am sine", "def": "am 0 100 sinus 220 sinus 5"},
+    {"name": "mix sine tri", "def": "tri 440:50 sinus 330"},
+    {"name": "fm slow freq", "def": "fm 60 140 { fm 60 140 generator sinus 800 sinus 10 } sinus 1"},
+    {"name": "fm mod mod", "def": "fm 60 140 { fm 60 140 modulator sinus 800 sinus 10 } sinus 1"},
+    {"name": "fm mod both", "def": "fm 60 140 { fm 60 140 both sinus 800 sinus 10 } sinus 1"},
+    {"name": "fm engine", "def":"fm 100 150 am 0 100 square 100:20 square 39 adsr 1:0 1000:0 2000:100 5001:100 6000:-100 8000:0 loop level 1"};
+    {"name": "comlex env", "def": "envelope 10000 once data 0 100 75 50 25 0 end fm 60 140 { fm 60 140 modulator square 880 sinus 50 } sinus 10"},
+    {"name": "env whitenoise", "def": "am 100 100 envelope 2000 once data 50 100 20 10 0 end wnoise sinus 1000"},
+    {"name": "adsr organ", "def": "adsr 1:100 200:50 400:50 450:0 500:0 loop { sinus 440 sinus 880:50 sinus 1320:25 }"},
+    {"name": "adsr beeper", "def":"adsr 1:100 50:100 51:0 100:0 101:100 150:100 151:0 1000:0 loop triangle 440"},
+    {"name": "reverb", "def": "reverb 450:90 reverb 10:80 adsr 1:80 100:0 333:0 loop sinus 440:80"},
+]
+
