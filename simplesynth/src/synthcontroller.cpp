@@ -47,8 +47,8 @@ void SynthController::play(){
     w->moveToThread(t);
     connect(this, SIGNAL(start()), w, SLOT(play()));
     connect(w, SIGNAL(result(bool)), this, SIGNAL(result(bool)));
-    this->start();
     t->start();
+    this->start();
 }
 
 void SynthController::setDuration(long duration)

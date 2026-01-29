@@ -21,13 +21,17 @@ public:
 
 };
 
-atomic<float> engine_speed;	// Float value that represents the engine speed
+//atomic<float> engine_speed;	// Float value that represents the engine speed
 
 class EngineSpeedHook : public SoundGeneratorVarHook<float>
 {
     public:
+        atomic<float> engine_speed;	// Float value that represents the engine speed
         EngineSpeedHook() : SoundGeneratorVarHook(&engine_speed, 0.0, 100.0, "engine_speed"){}
-    atomic<float> engine_speed;	// Float value that represents the engine speed
+        void setSpeed(float v)
+        {
+            engine_speed = v;
+        }
 };
 
 //static EngineSpeedHook instance;	// Needed to register the 'engine_speed' hook so it can be used.a
