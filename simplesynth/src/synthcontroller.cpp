@@ -9,6 +9,8 @@ SynthController::SynthController(QObject *parent) : QObject(parent)
     w = new Synthesizer;
     // create a thread to run it in
     t = new QThread;
+    connect(this, SIGNAL(start()), w, SLOT(play()));
+    connect(w, SIGNAL(done(bool)), this, SIGNAL(done(bool)));
     // default voice
     m_voiceDesc = "sinus 440";
     // default duration
@@ -45,8 +47,6 @@ void SynthController::play(){
     w->setDuration(m_duration);
     w->setVoiceDesc(m_voiceDesc);
     w->moveToThread(t);
-    connect(this, SIGNAL(start()), w, SLOT(play()));
-    connect(w, SIGNAL(result(bool)), this, SIGNAL(result(bool)));
     t->start();
     this->start();
 }

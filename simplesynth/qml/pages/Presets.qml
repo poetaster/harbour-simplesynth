@@ -25,7 +25,7 @@ import "../js/loader.js" as Locs
 
 Page {
     property var presets
-    property bool debug: true
+    property bool debug: false
 
     id: searchPage
     allowedOrientations: Orientation.All

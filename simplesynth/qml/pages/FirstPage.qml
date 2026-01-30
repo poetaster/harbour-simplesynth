@@ -5,12 +5,13 @@ import de.poetaster.sailsynth 1.0
 
 Page {
 
-    property bool playing: false
+    property bool debug: true
 
-    id: page
+    id: player
     //property var model: synth
     function updateSound(){
         if (!playing) {
+          playing = true;
           synth.setDuration(parseInt(duration.text));
           synth.setVoiceDesc(voiceText.text);
           synth.play();
@@ -22,15 +23,6 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
-    SynthController {
-        id: synth
-        onVoiceDescChanged:  {
-            // console.log("progress " + progress)
-        }
-        onResult: {
-            page.playing = false;
-        }
-    }
     WorkerScript {
         id: worker
         source: "worker.js"
@@ -55,7 +47,7 @@ Page {
         Column {
             id: column
 
-            width: page.width
+            width: player.width
             spacing: Theme.paddingLarge
             PageHeader {
                 title: qsTr("Synthesizer")

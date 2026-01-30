@@ -28,7 +28,7 @@ signals:
     void voiceDescChanged();
     void playing();
     void start();
-    void result(bool r);
+    void done(bool r);
 
 private:
     QString m_voiceDesc;

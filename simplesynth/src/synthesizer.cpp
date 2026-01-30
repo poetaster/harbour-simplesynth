@@ -43,8 +43,9 @@ void Synthesizer::play()
     m_g = SoundGenerator::factory(qPrintable(input));
     SoundGenerator::play(m_g);
 
-    const int fade_time=20; //m_fadeIn;
+    const int fade_time=50; //m_fadeIn;
     long duration = m_duration;
+    qDebug() << "play dur " << duration ; //<< " for " << m_duration;
 
     if (duration > fade_time) {
             SDL_Delay(duration-fade_time); // Play for ms
@@ -54,14 +55,16 @@ void Synthesizer::play()
             SoundGenerator::fade_out(fade_time);
             SDL_Delay(fade_time); // Play for ms (while fading out)
     }
-    SDL_Delay(30); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
+    SDL_Delay(50); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
+    SoundGenerator::setVolume(0);
     // signal we're finished
-    result(true);
+    done(true);
 
 }
 
 void Synthesizer::setDuration(long duration)
 {
+  qDebug() << "dur " << duration ; //<< " for " << m_duration;
   m_duration = duration;
 }
 
@@ -76,12 +79,12 @@ void Synthesizer::setFadeOut(long duration)
 }
 
 void Synthesizer::setSpeedOne(long duration) {
-    qDebug() << "s1 " << duration ; //<< " for " << m_duration;
+   // qDebug() << "s1 " << duration ; //<< " for " << m_duration;
    s1->speed = duration;
 }
 
 void Synthesizer::setFreqOne(long frequency) {
-    qDebug() << "f1 " << frequency ; //<< " for " << m_duration;
+    //qDebug() << "f1 " << frequency ; //<< " for " << m_duration;
     f1->freq = frequency;
 }
 /*
