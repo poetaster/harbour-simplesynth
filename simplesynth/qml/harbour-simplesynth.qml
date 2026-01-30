@@ -23,7 +23,8 @@ ApplicationWindow
         }
         onDone: {
             if (debug) console.log("done")
-            root.playing = false;
+            playing = false;
+           //Game.playing  = false;
         }
     }
 }

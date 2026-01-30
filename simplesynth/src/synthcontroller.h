@@ -28,6 +28,7 @@ signals:
     void voiceDescChanged();
     void playing();
     void start();
+    //void continuous();
     void done(bool r);
 
 private:

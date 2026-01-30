@@ -3,7 +3,7 @@ Type=Application
 X-Nemo-Application-Type=silica-qt5
 Icon=harbour-simplesynth
 Exec=harbour-simplesynth
-Name=harbour-simplesynth
+Name=Sailsynth
 # translation example:
 # your app name in German locale (de)
 #

@@ -8,11 +8,13 @@
     {"name" : "fm mod mod",   "def" : "fm 60 140 { fm 60 140 modulator sinus 440 sinus 5 } s1"},
     {"name" : "fm mod both",  "def" : "fm 60 140 { fm 60 140 both sinus 800 sinus 10 } sinus 1"},
     {"name" : "fm engine",    "def" : "fm 100 150 am 0 100 square 100:20 square 39 adsr 1:0 1000:0 2000:100 5001:100 6000:-100 8000:0 loop level 1"},
-    {"name" : "complex env",   "def" : "envelope 10000 once data 0 100 75 50 25 0 end fm 60 140 { fm 60 140 modulator square 440 triangle 220  } sinus 10"},
+    {"name" : "complex env",   "def" : "envelope 10000 once data 0 100 75 50 25 0 end fm 60 140 { fm 60 140 modulator square 440 sinus 50  } s1"},
     {"name" : "whitenoise wave", "def" : "am 100 100 envelope 2000 once data 50 100 20 10 0 end wnoise sinus 1000"},
     {"name" : "adsr organ",     "def" : "adsr 1:100 200:50 400:50 450:0 500:0 loop { sinus 440 sinus 880:50 sinus 1320:25"},
     {"name" : "adsr beeper",    "def" : "adsr 1:100 50:100 51:0 100:0 101:100 150:100 151:0 1000:0 loop triangle 440"},
     {"name" : "reverb",         "def" : "reverb 450:90 reverb 10:80 adsr 1:80 100:0 333:0 loop sinus 440:80"},
-    {"name" : "engine",        "def" : "reverb 30:30 fm 0 100 am 0 100 square 39:30 s1 adsr 1:0 1000:0 2000:100 3001:400 6000:400 8000:0 9000:0 loop level 1 reverb 30:50 { am 100 0 sinus 220:55 f1 }"}
+    {"name" : "engine",        "def" : "reverb 10:50 fm 0 100 am 0 100 tri 100:50 square 39:30 w1 adsr 1:0 1000:0 2000:100 3001:400 6000:400 8000:-100 9000:0 loop level 1 reverb 30:50 { am 100 0 sinus 220:55 f1 }"},
+    {"name" : "gof",         "def" : "{ { fm 40 120 { fm 40 120 generator sq 40:25 f1 } s1 } { fm 60 140 { fm 60 140 generator sin 440 f1 } s1 } } "},
+    {"name" : "gof2",         "def" : "define engine { reverb 30:30  fm 0 100  am 0 100 square 39:14 s1 adsr 1:0 1000:0 2000:100 3001:400 6000:400 8000:0 9000:0 loop level 0.1 } engine define ambiant {   am 100 0 tri 240:74 f1  } ambient { ambiant engine }"}
 ]
 

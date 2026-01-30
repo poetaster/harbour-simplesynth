@@ -26,6 +26,45 @@
         <source>Presets</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Game of Life</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Game</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop/Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed +</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed -</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area +</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area -</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Presets</name>

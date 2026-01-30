@@ -69,9 +69,9 @@ signals:
 
 private:
     QString m_voiceDesc;
-    long m_duration;
-    long m_fadeIn;
-    long m_fadeOut;
+    long m_duration = 3000;
+    long m_fadeIn = 50;
+    long m_fadeOut = 50;
     SoundGenerator*  m_g; // = SoundGenerator::factory(qPrintable(m_voiceDesc));
     SpeedHook* s1 ;   //= new SpeedHook();
     FreqOneHook* f1 ; //= new FreqOneHook();

@@ -54,6 +54,7 @@ DISTFILES += qml/harbour-simplesynth.qml \
     qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
     qml/pages/Presets.qml \
+    qml/pages/Game.qml \
     qml/js/*.js \
     ../rpm/harbour-simplesynth.changes.in \
     ../rpm/harbour-simplesynth.changes.run.in \
