@@ -13,8 +13,16 @@ ApplicationWindow
     property string currentEngine: "fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
 
     initialPage: Component { FirstPage { } }
+
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All
+
+    QtObject {
+        id: playerState
+        property bool playing: false
+        signal stoppedPlaying(bool playing)
+    }
+    Game {}
 
     SynthController {
         id: synth
@@ -23,8 +31,8 @@ ApplicationWindow
         }
         onDone: {
             if (debug) console.log("done")
-            playing = false;
-           //Game.playing  = false;
+            root.playing = false
+            playerState.stoppedPlaying(false)
         }
     }
 }
