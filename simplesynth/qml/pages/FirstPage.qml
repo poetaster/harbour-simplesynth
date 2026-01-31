@@ -13,12 +13,28 @@ Page {
         if (!playing) {
           playing = true;
           synth.setDuration(parseInt(duration.text));
-          synth.setVoiceDesc(voiceText.text);
+          synth.setVoiceDesc(filterVariables(voiceText.text));
           synth.play();
         }
         //var msg = {'action': 'play', 'sy': synth};
         //worker.sendMessage(msg);
     }
+    /* strip var from the result formula to present */
+    function filterVariables(text) {
+        //const re0 = /·/g;
+        //const re1 = /π/g;
+        //const re2 = /√/g;
+        //const re3 = /φ/g;
+        // rad2deg in exprtk
+        //const re5 = /deg/g;
+        // log is ln natural e in exprtk
+        const re0 = /}/g;
+        const re1 = /{/g;
+        const newtxt = text.replace(re0, " } ")
+        newtxt = newtxt.replace(re1, " { ")
+        return newtxt
+    }
+
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
