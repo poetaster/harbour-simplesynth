@@ -75,7 +75,7 @@ Page {
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width
-                text: qsTr("Enter Voice Description")
+                text: qsTr("Voice Description")
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeLarge
             }
@@ -90,20 +90,32 @@ Page {
             }
             TextField {
                 id:duration
-                width:parent.width
+                width:parent.width - Theme.horizontalPageMargin
                 text: "3000"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
 
             }
-
-            Button{
+            Row {
+                width: parent.width
                 x: Theme.horizontalPageMargin
-                width: parent.width /2
-                text: qsTr("Submit Voice Description to Engine")
+                spacing: 20
+            Button{
+                id: playButton
+                width: parent.width /3
+                text: qsTr("Play")
                 color: Theme.secondaryHighlightColor
                 onClicked:  updateSound();
-
+            }
+            Button{
+                id: stopButton
+                //x: playButton.right +  10
+                //y: playButton.ght
+                width: parent.width /3
+                text: qsTr("Stop")
+                color: Theme.secondaryHighlightColor
+                onClicked:  synth.stop();
+            }
             }
             Slider {
                 id: speedSlider

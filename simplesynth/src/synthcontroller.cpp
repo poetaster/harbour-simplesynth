@@ -53,6 +53,9 @@ void SynthController::play(){
     t->start();
     this->start();
 }
+void SynthController::stop(){
+    w->stop();
+}
 
 void SynthController::setDuration(long duration)
 {

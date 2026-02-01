@@ -15,19 +15,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter Voice Description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Submit Voice Description to Engine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Presets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Game of Life</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voice Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -63,6 +67,14 @@
     </message>
     <message>
         <source>Area -</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

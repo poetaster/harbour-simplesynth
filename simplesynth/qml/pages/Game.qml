@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 
 import "../js/settings.js" as Settings
 import "../js/gameoflife.js" as Game
+import "../js/notes.js" as Notes
 
 Page {
 
@@ -20,13 +21,18 @@ Page {
     }
 
     property bool debug: true
+    property int mode: 1
+    property var notes: []
+
     function sv() {
         var text = "1111111111111";
         var filename = "textfile";
         var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
         saveAs(blob, filename+".txt");
     }
+
     function startAudio() {
+
       synth.setDuration(parseInt(50000));
       //synth.setVoiceDesc(voiceText.text);
       synth.play();
@@ -34,7 +40,7 @@ Page {
 
     }
 
-    function updateSound(){
+    function updateSoundOne(){
       var generationsCounter = Game.generationsCounter
       var birthsCounter = 0
       var deathsCounter = 0
@@ -44,19 +50,20 @@ Page {
             for (var j = 0; j < Game.maxRow; j++) {
                 var n = Game.index(i,j);
                 if (Game.cells[n].mustdie && Game.cells[Game.index(i,j)].isLive ) {
-                    deathsCounter ++;
+                    if ( j > Game.maxRow / 2)
+                        deathsCounter ++;
 
                 }
                 if (Game.cells[n].mustbirth && !Game.cells[Game.index(i,j)].isLive) {
-                    birthsCounter ++;
-                    //wasSomeoneBirth = true;
+                    if ( j < Game.maxRow / 2)
+                        birthsCounter ++;
                 }
             }
         }
-        var deathsRelative = (deathsCounter/population) * 100
-        var birthsRelative = (birthsCounter/population)*1000
-        if (debug) console.log(deathsRelative)
-        if (debug) console.log(birthsRelative)
+        var deathsRelative = (deathsCounter/population) * 700
+        var birthsRelative = (birthsCounter/population)*1300
+        //if (debug) console.log(deathsRelative)
+        //if (debug) console.log(birthsRelative)
 
        synth.setSpeedOne(deathsRelative)
        synth.setFreqOne(birthsRelative)
@@ -64,6 +71,53 @@ Page {
         //worker.sendMessage(msg);
     }
 
+    function updateSoundTwo(){
+
+      var song = ['F#', 'E', 'D', 'E', 'B', 'F#', 'E', 'D', 'B', 'F#' ] // eightdays a week
+      var deathFreq = Notes.frequency('F#2')
+      var birthFreq = Notes.frequency('F#2')
+      var octave = 2
+        for ( var i = 0; i < Game.maxColumn; i++) {
+            for (var j = 0; j < Game.maxRow; j++) {
+                var n = Game.index(i,j);
+                if (Game.cells[n].mustdie && Game.cells[Game.index(i,j)].isLive ) {
+                    if ( j < Game.maxRow / 2) {
+                        for (var x = 0; x < 10; x++) {
+                            // select octave from row
+                            if (j % 10 === 0 &&  j < 50) octave = j /10
+                            //select note from column position
+                            if ( i % x === 0)  {
+                                var note =song[x] + octave
+                                birthFreq = Notes.frequency(note)
+                            }
+                        }
+                    }
+                }
+                if (Game.cells[n].mustbirth && !Game.cells[Game.index(i,j)].isLive) {
+                    if ( j > Game.maxRow / 2) {
+                        for (var x = 0; x < 10; x++) {
+                            // select octave from row
+                             if (j % 10 === 0 ) octave = j / 10
+                             if (octave > 4) octave = 4
+                             if (octave < 2) octave = 2
+                            //select note from column position
+                            if ( i % x === 0)  {
+                                var note =song[x] + octave
+                                deathFreq = Notes.frequency(note)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (debug) console.log(birthFreq)
+        if (debug) console.log(deathFreq)
+        //if (debug) console.log("two")
+
+       synth.setSpeedOne(deathFreq)
+       synth.setFreqOne(birthFreq)
+
+    }
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.Portrait
 
@@ -71,8 +125,16 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Mode 1")
+                onClicked: mode = 0
+            }
+            MenuItem {
+                text: qsTr("Mode 2")
+                onClicked: mode = 1
+            }
+        }
 
 
         Grid  {
@@ -263,7 +325,8 @@ Page {
             onTriggered: {
                 Game.gameUpdate()
                 canvas.requestPaint()
-                updateSound()
+                if (mode === 0) updateSoundOne()
+                if (mode === 1) updateSoundTwo()
             }
         }
 

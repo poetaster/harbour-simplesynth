@@ -46,7 +46,6 @@ void Synthesizer::play()
     const int fade_time=50; //m_fadeIn;
     long duration = m_duration;
     qDebug() << "play dur " << duration ; //<< " for " << m_duration;
-
     if (duration > fade_time) {
             SDL_Delay(duration-fade_time); // Play for ms
             SoundGenerator::fade_out(fade_time);
@@ -61,6 +60,16 @@ void Synthesizer::play()
     done(true);
 
 }
+void Synthesizer::stop()
+{
+    const int fade_time=50; //m_fadeIn;
+    SoundGenerator::fade_out(fade_time);
+    SDL_Delay(50); // Wait till the end of buffer is played (avoid clicks) TODO this is buffer size dependant
+    SoundGenerator::setVolume(0);
+    SoundGenerator::remove(m_g);
+    done(true);
+}
+
 
 void Synthesizer::setDuration(long duration)
 {

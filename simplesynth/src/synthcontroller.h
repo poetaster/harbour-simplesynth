@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE void setSpeedOne(long duration);
     Q_INVOKABLE void setFreqOne(long freq);
     Q_INVOKABLE void play();
+    Q_INVOKABLE void stop();
 
 signals:
     void voiceDescChanged();

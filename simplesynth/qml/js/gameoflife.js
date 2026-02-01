@@ -22,6 +22,7 @@ var birthsCounter = 0
 var deathsCounter = 0
 var population = 0
 
+
 function Cell(i_, j_) {
     this.isLive = false;
     this.mustdie = false;
@@ -30,16 +31,14 @@ function Cell(i_, j_) {
     this.j = j_;
 }
 
-function createCells() {
 
+function createCells() {
     cells = [];
     for (var i = 0; i < 100; i++) {
         for (var j = 0; j < 100; j++) {
             cells.push(new Cell(i,j));
         }
     }
-
-
 }
 
 function reInitArea(areaWidth, areaHeight) {
@@ -107,6 +106,7 @@ function clear() {
     deathsCounter = 0;
     population = 0;
 }
+
 function initRandom() {
     for (var i = 0; i < maxIndex; i++) {
         cells[i].mustdie = false;
@@ -182,7 +182,7 @@ function gameDraw(ctx, width, height) {
     }
 
 
-    ctx.font = "bold 20px sans-serif";
+    ctx.font = "bold 24px sans-serif";
 
     ctx.fillStyle = "#fff";
     ctx.fillText("generation: ", 10, 20);    ctx.fillText("" + generationsCounter, 180, 20);
