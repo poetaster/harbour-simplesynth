@@ -12,7 +12,7 @@ Name:       harbour-simplesynth
 # << macros
 
 Summary:    An Audio Synth with a simple QML UI
-Version:    0.1.1
+Version:    0.1.4
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
