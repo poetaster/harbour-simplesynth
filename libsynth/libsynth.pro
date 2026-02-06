@@ -18,7 +18,7 @@ SOURCES += \
 HEADERS += include/libsynth.hpp
 
 PKGCONFIG += sdl2 SDL2_mixer
-#CONFIG += link_pkgconfig
+CONFIG += link_pkgconfig
 
 # does this, I think, target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDLMIXER_LIBRARIES})
 

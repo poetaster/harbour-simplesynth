@@ -5,7 +5,7 @@ import de.poetaster.sailsynth 1.0
 
 Page {
 
-    property bool debug: true
+    property bool debug: false
 
     id: player
     //property var model: synth

@@ -20,7 +20,7 @@ Page {
         }
     }
 
-    property bool debug: true
+    property bool debug: false
     property int mode: 1
     property var notes: []
 

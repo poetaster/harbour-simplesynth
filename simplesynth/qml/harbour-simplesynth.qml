@@ -10,7 +10,7 @@ ApplicationWindow
     id:root
     property bool debug: true
     property bool playing: false
-    property string currentEngine: "fm 60 140 { fm 60 140 generator sinus 400 sinus 10 } sinus 1"
+    property string currentEngine: "{ { fm 50 150 { fm 20 120 generator sq 120:12 s1 } s1 } { fm 60 140 { fm 60 140 generator sin 440:60 f1 } s1 } }"
 
     initialPage: Component { FirstPage { } }
 
