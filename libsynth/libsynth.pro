@@ -23,7 +23,7 @@ CONFIG += link_pkgconfig
 # does this, I think, target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDLMIXER_LIBRARIES})
 
 # NONSENSE
-TARGET = lsynthetizer
+TARGET =libsynth
 
 #DEFINES += QUAZIP_BUILD
 #CONFIG(staticlib): DEFINES += QUAZIP_STATIC

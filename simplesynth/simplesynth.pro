@@ -21,7 +21,7 @@ CONFIG += link_pkgconfig
 
 # include our shared library and install it
 
-LIBS += -L$$OUT_PWD/../libsynth/ -llsynthetizer
+LIBS += -L$$OUT_PWD/../simplesynth/lib -llibsynth
 
 #libsynth.files += ../libsynth/libsynthetizer.so.1.0.0
 #libsynth.files += ../libsynth/libsynthetizer.so.1.0
